@@ -1,2 +1,2 @@
-# projeto_vendas
-Projeto de Vendas usando spring boot para estágio UFS
+# PROJETO_VENDAS
+Projeto de um sitama de gestão de vendas para estágio obrigatorio da UFS.
