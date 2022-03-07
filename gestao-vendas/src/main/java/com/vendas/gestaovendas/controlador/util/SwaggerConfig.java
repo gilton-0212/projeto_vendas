@@ -15,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+
     public Docket configuracao(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
@@ -26,7 +27,7 @@ public class SwaggerConfig {
 
     private ApiInfo informacaoApi() {
         return new ApiInfoBuilder()
-                .title("SGV - GESTÃO DE VENDAS")
+                .title("GESTÃO DE VENDAS")
                 .description("Sistema para Gestão de Vendas")
                 .version("1.0.0")
                 .build();

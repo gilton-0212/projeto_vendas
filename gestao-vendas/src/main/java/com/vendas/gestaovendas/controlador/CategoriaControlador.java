@@ -24,7 +24,7 @@ public class CategoriaControlador {
 
 	@Autowired
 	private CategoriaServico categoriaSevico;
-	
+
 	@ApiOperation(value = "listar")
 	@GetMapping("")
 	public List<Categoria> listarTodas(){
@@ -49,5 +49,12 @@ public class CategoriaControlador {
 	@PutMapping("/{codigo}")
 	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @Valid @RequestBody Categoria categoria){
 		return ResponseEntity.ok(categoriaSevico.atualizar(codigo, categoria));
+	}
+
+	@ApiOperation(value = "Deletar")
+	@DeleteMapping("/{codigo}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable long codigo){
+		categoriaSevico.deletar(codigo);
 	}
 }
