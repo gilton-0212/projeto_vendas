@@ -2,6 +2,8 @@ package com.vendas.gestaovendas.controlador;
 
 import com.vendas.gestaovendas.entidades.Categoria;
 import com.vendas.gestaovendas.entidades.Produtos;
+import com.vendas.gestaovendas.excecao.RegraDeNegocioException;
+import com.vendas.gestaovendas.servico.CategoriaServico;
 import com.vendas.gestaovendas.servico.ProdutoServico;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,30 +23,42 @@ public class ProdutoControladora {
     @Autowired
     private ProdutoServico produtoServico;
 
-    @ApiOperation(value = "Listar Todos")
-    @GetMapping("")
+    @Autowired
+    private CategoriaServico categoriaServico;
+
+
+    @ApiOperation(value = "Listar Todos", nickname = "ListarTodosProdutos")
+    @GetMapping
     public List<Produtos> listarTodos(){
         return produtoServico.ListarTodos();
     }
 
-    @ApiOperation(value = "Listar por Codigo")
+    @ApiOperation(value = "Listar por codigo", nickname = "BuscarProdutoPorCodigo")
     @GetMapping("/{codigo}")
-    public ResponseEntity<Optional<Produtos>> listarTodos(@PathVariable long codigo){
-        Optional<Produtos> produtos = produtoServico.BuscarPorCodigo(codigo);
-        return produtos.isPresent() ? ResponseEntity.ok(produtos) : ResponseEntity.notFound().build();
+    public Optional<Produtos> listarPorCodigo(@PathVariable Long codigo){
+        return produtoServico.buscarPorCodigo(codigo);
     }
 
-    @ApiOperation(value = "Salvar")
+    @ApiOperation(value = "Listar Produto por Categoria", nickname = "ListarProdutoPorCategoria")
+    @GetMapping("categoria/{codigo}")
+    public List<Produtos> listarProdutoPorCategoria(@PathVariable Long codigo){
+        return produtoServico.buscarProdutosPorCategoria(codigo);
+    }
+
+    @ApiOperation(value = "Salvar", nickname = "SalvarProduto")
     @PostMapping("")
     public ResponseEntity<Produtos> salvar(@RequestBody Produtos produtos){
       Produtos produtoSalvo = produtoServico.salvar(produtos);
       return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
     }
 
+    /*
     @ApiOperation(value = "Deletar")
     @DeleteMapping("{codigo}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Long codigo){
         produtoServico.Deletar(codigo);
     }
+
+     */
 }
