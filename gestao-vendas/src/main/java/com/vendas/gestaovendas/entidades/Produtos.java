@@ -43,10 +43,10 @@ public class Produtos {
 	
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
-	private Categoria codigoCategoria;
+	private Categoria categoria;
 	
 	public Produtos() {
 		
 	}
-	
+
 }
