@@ -22,6 +22,7 @@ import java.util.List;
 public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandler {
 
     public static final String CONSTANT_VALIDATION_NOT_BLANK = "NotBlank";
+    public static final String CONSTANT_VALIDATION_NOT_Null = "NotNull";
     public static final String CONSTANT_VALIDATION_LENGTH = "Length";
 
 
@@ -68,6 +69,9 @@ public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandle
 
     private String tratarMensagemDeErroParaUsuario(FieldError fieldError) {
         if (fieldError.getCode().equals(CONSTANT_VALIDATION_NOT_BLANK)){
+            return fieldError.getDefaultMessage().concat(" é obrigatorio");
+        }
+        if (fieldError.getCode().equals(CONSTANT_VALIDATION_NOT_Null)){
             return fieldError.getDefaultMessage().concat(" é obrigatorio");
         }
         if (fieldError.getCode().equals(CONSTANT_VALIDATION_LENGTH)){

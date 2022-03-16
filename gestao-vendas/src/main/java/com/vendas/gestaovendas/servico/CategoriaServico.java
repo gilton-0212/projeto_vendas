@@ -27,6 +27,7 @@ public class CategoriaServico {
 	}
 
 	public Optional<Categoria> buscarPorCodigo(Long codigo) {
+
 		return categoriaRepositorio.findById(codigo);
 	}
 
@@ -42,7 +43,7 @@ public class CategoriaServico {
 		return categoriaRepositorio.save(categoriaSalvar);
 	}
 
-	public void deletar (long codigo){
+	public void deletar (Long codigo){
 		categoriaRepositorio.deleteById(codigo);
 	}
 
