@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 
+
+
+
 @SpringBootApplication
 
 public class GestaoVendasApplication {

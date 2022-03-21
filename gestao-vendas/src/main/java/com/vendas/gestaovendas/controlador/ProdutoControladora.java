@@ -77,10 +77,10 @@ public class ProdutoControladora {
 
     @ApiOperation(value = "Atualizar", nickname = "atualizarProduto")
     @PutMapping("/{codigoProduto}")
-    public ResponseEntity<ProdutoResponseDTO> atualizar( @PathVariable Long codigoProduto
-            ,@Valid @RequestBody ProdutoRequestDTO produtodto){
-        Produtos produtoAtualizado = produtoServico.atualizar( codigoProduto, produtodto.converterParaEntidade(codigoProduto));
-        return ResponseEntity.ok(ProdutoResponseDTO.converterParaProdutoDTO(produtoAtualizado));
+    public ResponseEntity<Produtos> atualizar( @PathVariable Long codigoProduto
+            ,@Valid @RequestBody Produtos produtos){
+        Produtos produtoAtualizado = produtoServico.atualizar( codigoProduto, produtos);
+        return ResponseEntity.ok(produtoAtualizado);
     }
 
     @ApiOperation(value = "Deletar", nickname = "DeletarProduto")

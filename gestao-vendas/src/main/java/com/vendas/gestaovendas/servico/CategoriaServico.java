@@ -39,7 +39,7 @@ public class CategoriaServico {
 	public Categoria atualizar(Long codigo, Categoria categoria){
 		Categoria categoriaSalvar = validarcategoriaexiste(codigo);
 		validarCategoriaDuplicada(categoria);
-		BeanUtils.copyProperties(categoria, categoriaSalvar, "codio");
+		BeanUtils.copyProperties(categoria, categoriaSalvar, "codigo");
 		return categoriaRepositorio.save(categoriaSalvar);
 	}
 
