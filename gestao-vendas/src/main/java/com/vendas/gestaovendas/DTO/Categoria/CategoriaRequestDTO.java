@@ -20,15 +20,13 @@ public class CategoriaRequestDTO {
     @Length(min = 3, max = 50, message = "Nome")
     private String nome;
 
-    public CategoriaRequestDTO(String nome) {
-        this.nome = nome;
-    }
-
     public Categoria converteParaEntidade(){
+
         return new Categoria(nome);
     }
 
     public Categoria converteParaEntidade(Long codigo){
+
         return new Categoria(codigo,nome);
     }
 }

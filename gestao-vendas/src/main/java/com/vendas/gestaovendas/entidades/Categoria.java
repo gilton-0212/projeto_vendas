@@ -21,10 +21,17 @@ public class Categoria {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo")
 	private long codigo;
 
 	@Column(name = "nome")
+	@NotBlank(message = "Nome")
+	@Length(min = 3, max = 50, message = "Nome")
 	private String nome;
+
+	public Categoria(@NotBlank(message = "Nome")@Length(min = 3,max = 50, message = "Nome")String nome) {
+		this.nome = nome;
+	}
 
 	public Categoria() {
 
@@ -32,10 +39,6 @@ public class Categoria {
 
 	public Categoria(Long codigo){
 		this.codigo = codigo;
-	}
-	public Categoria(String nome){
-
-		this.nome = nome;
 	}
 
 	public Categoria(Long codigo, String nome){
