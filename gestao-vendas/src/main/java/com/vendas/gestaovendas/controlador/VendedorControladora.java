@@ -1,9 +1,10 @@
 package com.vendas.gestaovendas.controlador;
 
 
-import com.vendas.gestaovendas.DTO.Categoria.CategoriaRequestDTO;
-import com.vendas.gestaovendas.DTO.Categoria.CategoriaResonseDTO;
+import com.vendas.gestaovendas.DTO.Categoria.CategoriaResponseDTO;
 import com.vendas.gestaovendas.DTO.Produto.ProdutoResponseDTO;
+import com.vendas.gestaovendas.DTO.Vendedor.VendedorRequestDTO;
+import com.vendas.gestaovendas.DTO.Vendedor.VendedorResponseDTO;
 import com.vendas.gestaovendas.entidades.Categoria;
 import com.vendas.gestaovendas.entidades.Vendedor;
 import com.vendas.gestaovendas.repositorio.VendedorRepositorio;
@@ -30,28 +31,30 @@ public class VendedorControladora{
 
     @ApiOperation(value = "listar" , nickname = "ListarTodosVendedores")
     @GetMapping("")
-    public List<Vendedor> listarTodas(){
-        return vendedorServico.listarTodos();
+    public List<VendedorResponseDTO> listarTodas(){
+        return vendedorServico.listarTodos().stream().
+                map(vendedor -> VendedorResponseDTO.converterParaVendedor(vendedor)).collect(Collectors.toList());
     }
 
     @ApiOperation(value = "Listar por Codigo", nickname = "ListarVendedorPorCodigo")
     @GetMapping("/{codigo}")
-    public ResponseEntity<Optional<Vendedor>> buscarPorId(@PathVariable Long codigo){
-        Optional<Vendedor> categoria = vendedorServico.buscarPorCodigo(codigo);
-        return categoria.isPresent() ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
+    public ResponseEntity<VendedorResponseDTO> buscarPorId(@PathVariable Long codigo){
+        Optional<Vendedor> vendedor = vendedorServico.buscarPorCodigo(codigo);
+        return vendedor.isPresent() ? ResponseEntity.ok(VendedorResponseDTO.converterParaVendedor(vendedor.get())) :
+                ResponseEntity.notFound().build();
     }
 
     @ApiOperation(value = "Salvar", nickname = "SalvarVendedor")
     @PostMapping
-    public ResponseEntity<Vendedor> salvar(@Valid @RequestBody Vendedor vendedor){
-        Vendedor vendedorsalvo =  vendedorServico.salvar(vendedor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(vendedorsalvo);
+    public ResponseEntity<VendedorResponseDTO> salvar(@Valid @RequestBody VendedorRequestDTO vendedorRequestDTO){
+        Vendedor vendedorsalvo =  vendedorServico.salvar(vendedorRequestDTO.converterParaEntidade());
+        return ResponseEntity.status(HttpStatus.CREATED).body(VendedorResponseDTO.converterParaVendedor(vendedorsalvo));
     }
 
     @ApiOperation(value = "Atualizar", nickname = "AtualizarVendedor")
     @PutMapping("/{codigo}")
-    public ResponseEntity<Vendedor> atualizar(@PathVariable Long codigo, @Valid @RequestBody Vendedor vendedor){
-        return ResponseEntity.ok(vendedorServico.atualizar(codigo, vendedor));
+    public ResponseEntity<Vendedor> atualizar(@PathVariable Long codigo, @Valid @RequestBody VendedorRequestDTO vendedorRequestDTO){
+        return ResponseEntity.ok(vendedorServico.atualizar(codigo,vendedorRequestDTO.converterParaEntidade(codigo)));
     }
 
     @ApiOperation(value = "Deletar", nickname = "DeeletarVendedor")

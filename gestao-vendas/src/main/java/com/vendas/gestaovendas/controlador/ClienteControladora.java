@@ -1,7 +1,5 @@
 package com.vendas.gestaovendas.controlador;
 
-import com.vendas.gestaovendas.DTO.Categoria.CategoriaRequestDTO;
-import com.vendas.gestaovendas.DTO.Categoria.CategoriaResonseDTO;
 import com.vendas.gestaovendas.DTO.Cliente.ClienteRequestDTO;
 import com.vendas.gestaovendas.DTO.Cliente.ClienteResponseDTO;
 import com.vendas.gestaovendas.entidades.Categoria;
@@ -27,7 +25,7 @@ public class ClienteControladora {
     @Autowired
     private ClienteServico clienteServico;
 
-    @ApiOperation(value = "listar" , nickname = "ListarTodos Clientes")
+    @ApiOperation(value = "listar" , nickname = "ListarTodosClientes")
     @GetMapping
     public List<ClienteResponseDTO> listarTodas(){
 
@@ -57,7 +55,7 @@ public class ClienteControladora {
         return ResponseEntity.ok(ClienteResponseDTO.converterParaClienteDTO(clienteatualizado));
     }
 
-    @ApiOperation(value = "Deletar", nickname = "Deletar Cliente")
+    @ApiOperation(value = "Deletar", nickname = "DeletarCliente")
     @DeleteMapping("/{codigo}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long codigo){
