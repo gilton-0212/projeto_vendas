@@ -5,10 +5,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.vendas.gestaovendas.DTO.Categoria.CategoriaRequestDTO;
-import com.vendas.gestaovendas.DTO.Categoria.CategoriaResonseDTO;
+import com.vendas.gestaovendas.DTO.Categoria.CategoriaResponseDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,33 +29,31 @@ public class CategoriaControlador {
 	private CategoriaServico categoriaSevico;
 
 	@ApiOperation(value = "listar" , nickname = "ListarTodasCategorias")
-	@GetMapping
-	public List<CategoriaResonseDTO> listarTodas(){
-		return categoriaSevico.listarTodas().stream().map(categoria -> CategoriaResonseDTO.converterParaCategoriaDTO(categoria)).
+	@GetMapping("")
+	public List<CategoriaResponseDTO> listarTodas(){
+		return categoriaSevico.listarTodas().stream().map(categoria -> CategoriaResponseDTO.converterParaCategoria(categoria)).
 				collect(Collectors.toList());
-		/*listarTodas().stream().map(categoria -> CategoriaResonseDTO.converterParaCategoriaDTO(categoria))
-		.collect(Collectors.toList());
-		*/
 	}
 
 	@ApiOperation(value = "Listar por Codigo", nickname = "ListarCategoriaPorCodigo")
 	@GetMapping("/{codigo}")
-	public ResponseEntity<CategoriaResonseDTO> buscarPorId(@PathVariable Long codigo){
+	public ResponseEntity<CategoriaResponseDTO> buscarPorId(@PathVariable Long codigo){
 		Optional<Categoria> categoria = categoriaSevico.buscarPorCodigo(codigo);
-		return categoria.isPresent() ? ResponseEntity.ok(CategoriaResonseDTO.converterParaCategoriaDTO(categoria.get())) : ResponseEntity.notFound().build();
+		return categoria.isPresent() ? ResponseEntity.ok(CategoriaResponseDTO.converterParaCategoria(categoria.get())):
+				ResponseEntity.notFound().build();
 	}
 
 	@ApiOperation(value = "Salvar", nickname = "SalvarCategoria")
 	@PostMapping
-	public ResponseEntity<CategoriaResonseDTO> salvar(@Valid @RequestBody CategoriaRequestDTO categoriadto){
-		Categoria categoriaSalva =  categoriaSevico.salvar(categoriadto.converteParaEntidade());
-		return ResponseEntity.status(HttpStatus.CREATED).body(CategoriaResonseDTO.converterParaCategoriaDTO(categoriaSalva));
+	public ResponseEntity<CategoriaResponseDTO> salvar(@Valid @RequestBody CategoriaRequestDTO categoriadto){
+		Categoria categoriaSalva =  categoriaSevico.salvar(categoriadto.converterParaEntidade());
+		return ResponseEntity.status(HttpStatus.CREATED).body(CategoriaResponseDTO.converterParaCategoria(categoriaSalva));
 	}
 
 	@ApiOperation(value = "Atualizar", nickname = "AtualizarCategoria")
 	@PutMapping("/{codigo}")
 	public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @Valid @RequestBody CategoriaRequestDTO categoriadto){
-		return ResponseEntity.ok(categoriaSevico.atualizar(codigo, categoriadto.converteParaEntidade(codigo)));
+		return ResponseEntity.ok(categoriaSevico.atualizar(codigo, categoriadto.converterParaEntidade(codigo)));
 	}
 
 	@ApiOperation(value = "Deletar", nickname = "DeeletarCategoria")

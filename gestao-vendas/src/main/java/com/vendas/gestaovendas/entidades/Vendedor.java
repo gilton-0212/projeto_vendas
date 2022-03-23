@@ -20,8 +20,22 @@ public class Vendedor {
     private Long codigo;
 
     @Column(name = "nome")
-    @NotBlank
-    @Length(min = 3, max = 50, message = "nome")
     private String nome;
 
+    public Vendedor(){
+
+    }
+
+    public Vendedor(String nome) {
+        this.nome = nome;
+    }
+
+    public Vendedor(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public Vendedor(Long codigo, String nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+    }
 }

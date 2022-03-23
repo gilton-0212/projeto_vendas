@@ -44,7 +44,6 @@ public class Produtos {
 	@Column(name = "observacao")
 	private String observacao;
 
-	@NotNull(message = "Codigo Categoria")
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
 	private Categoria categoria;
@@ -53,20 +52,14 @@ public class Produtos {
 
 	}
 
-	public Produtos(String descricao, int quantidade, BigDecimal precoCusto, BigDecimal precoVenda, String observacao) {
+	public Produtos(String descricao, Integer quantidade, BigDecimal precoCusto, BigDecimal precoVenda,
+				   String observacao, Categoria categoria) {
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 		this.precoCusto = precoCusto;
 		this.precoVenda = precoVenda;
 		this.observacao = observacao;
-	}
-	public Produtos(Long codigo, String descricao, int quantidade, BigDecimal precoCusto, BigDecimal precoVenda, String observacao) {
-		this.codigo = codigo;
-		this.descricao = descricao;
-		this.quantidade = quantidade;
-		this.precoCusto = precoCusto;
-		this.precoVenda = precoVenda;
-		this.observacao = observacao;
+		this.categoria = categoria;
 	}
 
 	public Long getCodigo() {
@@ -79,49 +72,5 @@ public class Produtos {
 
 	public String getDescricao() {
 		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public BigDecimal getPrecoCusto() {
-		return precoCusto;
-	}
-
-	public void setPrecoCusto(BigDecimal precoCusto) {
-		this.precoCusto = precoCusto;
-	}
-
-	public BigDecimal getPrecoVenda() {
-		return precoVenda;
-	}
-
-	public void setPrecoVenda(BigDecimal precoVenda) {
-		this.precoVenda = precoVenda;
-	}
-
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
 	}
 }

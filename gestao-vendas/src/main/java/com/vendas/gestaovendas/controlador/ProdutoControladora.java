@@ -69,10 +69,10 @@ public class ProdutoControladora {
     }
 
     @ApiOperation(value = "Salvar", nickname = "SalvarProduto")
-    @PostMapping("")
-    public ResponseEntity<Produtos> salvar(@Valid @RequestBody Produtos produtos){
-      Produtos produtoSalvo = produtoServico.salvar(produtos);
-      return (ResponseEntity<Produtos>) ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
+    @PostMapping
+    public ResponseEntity<ProdutoResponseDTO> salvar(@Valid @RequestBody ProdutoRequestDTO produtoRequestDTO){
+      Produtos produtoSalvo = produtoServico.salvar(produtoRequestDTO.converterParaEntidade());
+      return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoResponseDTO.converterParaProdutoDTO(produtoSalvo));
     }
 
     @ApiOperation(value = "Atualizar", nickname = "atualizarProduto")

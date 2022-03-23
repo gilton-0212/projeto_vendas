@@ -27,7 +27,6 @@ public class CategoriaServico {
 	}
 
 	public Optional<Categoria> buscarPorCodigo(Long codigo) {
-
 		return categoriaRepositorio.findById(codigo);
 	}
 
@@ -39,11 +38,11 @@ public class CategoriaServico {
 	public Categoria atualizar(Long codigo, Categoria categoria){
 		Categoria categoriaSalvar = validarcategoriaexiste(codigo);
 		validarCategoriaDuplicada(categoria);
-		BeanUtils.copyProperties(categoria, categoriaSalvar, "codigo");
+		BeanUtils.copyProperties(categoria, categoriaSalvar, "codio");
 		return categoriaRepositorio.save(categoriaSalvar);
 	}
 
-	public void deletar (Long codigo){
+	public void deletar (long codigo){
 		categoriaRepositorio.deleteById(codigo);
 	}
 

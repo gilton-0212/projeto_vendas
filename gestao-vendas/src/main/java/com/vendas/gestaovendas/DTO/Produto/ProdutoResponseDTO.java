@@ -1,6 +1,7 @@
 package com.vendas.gestaovendas.DTO.Produto;
 
-import com.vendas.gestaovendas.DTO.Categoria.CategoriaResonseDTO;
+import com.vendas.gestaovendas.DTO.Categoria.CategoriaResponseDTO;
+import com.vendas.gestaovendas.entidades.Categoria;
 import com.vendas.gestaovendas.entidades.Produtos;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -32,9 +33,10 @@ public class ProdutoResponseDTO {
     private String observacao;
 
     @ApiModelProperty(value = "Categoria")
-    private CategoriaResonseDTO categoria;
+    private CategoriaResponseDTO categoria;
 
-    public ProdutoResponseDTO(Long codigo, String descricao, int quantidade, BigDecimal precoCusto, BigDecimal precoVenda, String observacao) {
+    public ProdutoResponseDTO(Long codigo, String descricao, int quantidade, BigDecimal precoCusto, BigDecimal precoVenda,
+                              String observacao, CategoriaResponseDTO categoria ){
         this.codigo = codigo;
         this.descricao = descricao;
         this.quantidade = quantidade;
@@ -46,7 +48,8 @@ public class ProdutoResponseDTO {
 
     public static ProdutoResponseDTO converterParaProdutoDTO(Produtos produtos){
         return new ProdutoResponseDTO(produtos.getCodigo(), produtos.getDescricao(), produtos.getQuantidade(),
-                produtos.getPrecoCusto(), produtos.getPrecoVenda(), produtos.getObservacao());
+                produtos.getPrecoCusto(), produtos.getPrecoVenda(), produtos.getObservacao(),
+                CategoriaResponseDTO.converterParaCategoria(produtos.getCategoria()));
     }
 
 

@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -39,52 +41,17 @@ public class ProdutoRequestDTO {
        @Length(max = 500, message = "Observação")
        private String observacao;
 
+       @NotNull(message = "Codigo Categoria")
+       @ManyToOne
+       @JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
+       private Categoria categoria;
+
        public Produtos converterParaEntidade(){
-            return new Produtos(descricao,quantidade,precoCusto,precoVenda,observacao);
+           return new Produtos(descricao,quantidade,precoCusto,precoVenda,observacao,categoria);
        }
+
        public Produtos converterParaEntidade(Long codigoProduto){
-        return new Produtos(codigoProduto,descricao,quantidade,precoCusto,precoVenda,observacao);
+              return new Produtos(descricao,quantidade,precoCusto,precoVenda,observacao,categoria);
        }
-
-       public String getDescricao() {
-         return descricao;
-       }
-
-       public void setDescricao(String descricao) {
-        this.descricao = descricao;
-       }
-
-       public int getQuantidade() {
-        return quantidade;
-       }
-
-       public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-       }
-
-       public BigDecimal getPrecoCusto() {
-        return precoCusto;
-       }
-
-       public void setPrecoCusto(BigDecimal precoCusto) {
-        this.precoCusto = precoCusto;
-       }
-
-       public BigDecimal getPrecoVenda() {
-        return precoVenda;
-       }
-
-       public void setPrecoVenda(BigDecimal precoVenda) {
-        this.precoVenda = precoVenda;
-       }
-
-       public String getObservacao() {
-        return observacao;
-       }
-
-       public void setObservacao(String observacao) {
-        this.observacao = observacao;
-       }
-
 }
 

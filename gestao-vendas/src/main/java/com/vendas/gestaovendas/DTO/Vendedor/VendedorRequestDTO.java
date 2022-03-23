@@ -1,29 +1,33 @@
-package com.vendas.gestaovendas.DTO.Categoria;
+package com.vendas.gestaovendas.DTO.Vendedor;
 
 import com.vendas.gestaovendas.entidades.Categoria;
+import com.vendas.gestaovendas.entidades.Vendedor;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("Categoria Requisição DTO")
-public class CategoriaRequestDTO {
+@ApiModel("Vendedor Request DTO")
+public class VendedorRequestDTO {
 
     @ApiModelProperty(value = "Nome")
     @NotBlank(message = "Nome")
-    @Length(min = 3, max = 50, message = "Nome")
+    @Length(min = 3, max = 50, message = "nome")
     private String nome;
 
-    public Categoria converterParaEntidade(){
+    public Vendedor converterParaEntidade(){
 
-        return  new Categoria(nome);
+        return new Vendedor(nome);
     }
 
-    public Categoria converterParaEntidade(Long codigo){
+    public Vendedor converterParaEntidade(Long codigo){
 
-        return new Categoria(codigo,nome);
+        return new Vendedor(codigo,nome);
     }
 
     public String getNome() {
