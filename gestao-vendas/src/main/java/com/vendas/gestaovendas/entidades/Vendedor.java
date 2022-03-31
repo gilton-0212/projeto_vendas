@@ -1,6 +1,5 @@
 package com.vendas.gestaovendas.entidades;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;

@@ -11,12 +11,11 @@ public interface ProdutoRepositorio extends JpaRepository<Produtos, Long>{
 
     /*
     List<Produtos> findByCategoriaCodigo(Long codigoCategoria);
-    @Query("Select prod"
-            + "from Produtos prod"
-            + "where prod.codigo = :codigo"
-            + "and prod.categoria.codigo = :codigoCategoria")
+    @Query("Select prod "
+            + "from Produtos prod "
+            + "where prod.codigo = :codigo "
+            + "and prod.categoria.codigo = :codigoCategoria ")
     Optional<Produtos> buscarPorCodigo(Long codigo, Long codigoCategoria);
-
      */
 
     List<Produtos> findByCategoriaCodigo(Long codigo);
