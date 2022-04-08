@@ -2,22 +2,37 @@ package com.vendas.gestaovendas.DTO.Venda;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.List;
 
-@ApiModel("Venda Requisição DTO")
+@ApiModel("Venda Requisição")
+@Data
 public class VendaRequestDTO {
 
-    @ApiModelProperty(name = "Date")
+    @ApiModelProperty(value = "Data")
     private LocalDate data;
 
-    @ApiModelProperty(name = "Ativo")
+    @ApiModelProperty(value = "Ativo")
     private Boolean ativo;
 
-    @ApiModelProperty(name = "Itens da venda")
-    List<ItemVendaRequestDTO> itensVendaDTO;
+    @ApiModelProperty(value = "Itens")
+    private List<ItemVendaRequestDTO> ItensVendaDto;
+
+    @ApiModelProperty(value = "Codigo Cliente")
+    private Long codigoCliente;
+
+    @ApiModelProperty(value = "Vendedor")
+    private Long codigoVendedor;
+
+    public VendaRequestDTO(LocalDate data, Boolean ativo, List<ItemVendaRequestDTO> itensVendaDto, Long codigoCliente, Long codigoVendedor) {
+        this.data = data;
+        this.ativo = ativo;
+        ItensVendaDto = itensVendaDto;
+        this.codigoCliente = codigoCliente;
+        this.codigoVendedor = codigoVendedor;
+    }
 
     public LocalDate getData() {
         return data;
@@ -35,11 +50,27 @@ public class VendaRequestDTO {
         this.ativo = ativo;
     }
 
-    public List<ItemVendaRequestDTO> getItensVendaDTO() {
-        return itensVendaDTO;
+    public List<ItemVendaRequestDTO> getItensVendaDto() {
+        return ItensVendaDto;
     }
 
-    public void setItensVendaDTO(List<ItemVendaRequestDTO> itensVendaDTO) {
-        this.itensVendaDTO = itensVendaDTO;
+    public void setItensVendaDto(List<ItemVendaRequestDTO> itensVendaDto) {
+        ItensVendaDto = itensVendaDto;
+    }
+
+    public Long getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public void setCodigoCliente(Long codigoCliente) {
+        this.codigoCliente = codigoCliente;
+    }
+
+    public Long getCodigoVendedor() {
+        return codigoVendedor;
+    }
+
+    public void setCodigoVendedor(Long codigoVendedor) {
+        this.codigoVendedor = codigoVendedor;
     }
 }

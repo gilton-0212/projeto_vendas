@@ -2,24 +2,36 @@ package com.vendas.gestaovendas.DTO.Venda;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
-@ApiModel("Cliente da Venda Retorno DTO")
+@ApiModel("Cliente da venda retorno DTO")
 public class ClienteVendaResponseDTO {
 
-    @ApiModelProperty(value = "nome Cliente")
+    @ApiModelProperty(value = "Nome cliente")
     private String nome;
 
-    @ApiModelProperty(value = "Venda Cliente")
-    private List<VendaResponseDTO> vendaResponseDTO;
+    @ApiModelProperty(value = "Venda")
+    private List<VendaResponseDTO> vendaResponseDTOs;
 
-    public ClienteVendaResponseDTO(String nome, List<VendaResponseDTO> vendaResponseDTO) {
+    public ClienteVendaResponseDTO(String nome, List<VendaResponseDTO> vendaResponseDTOs) {
         this.nome = nome;
-        this.vendaResponseDTO = vendaResponseDTO;
+        this.vendaResponseDTOs = vendaResponseDTOs;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<VendaResponseDTO> getVendaResponseDTOs() {
+        return vendaResponseDTOs;
+    }
+
+    public void setVendaResponseDTOs(List<VendaResponseDTO> vendaResponseDTOs) {
+        this.vendaResponseDTOs = vendaResponseDTOs;
     }
 }

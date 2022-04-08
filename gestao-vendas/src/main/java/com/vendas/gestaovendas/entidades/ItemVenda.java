@@ -19,7 +19,7 @@ public class ItemVenda {
     private Long codigo;
 
     @Column(name = "quantidade")
-    private Integer quanidade;
+    private Integer quantidade;
 
     @Column(name = "preco_vendido")
     private BigDecimal precoVendido;
@@ -32,17 +32,25 @@ public class ItemVenda {
     @JoinColumn(name = "codigo_venda", referencedColumnName = "codigo")
     private Venda venda;
 
+
+    public ItemVenda() {
+
+    }
+    public ItemVenda(Produtos produtos) {
+        this.produtos = produtos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ItemVenda)) return false;
         ItemVenda itemVenda = (ItemVenda) o;
-        return codigo.equals(itemVenda.codigo) && quanidade.equals(itemVenda.quanidade) && precoVendido.equals(itemVenda.precoVendido) && produtos.equals(itemVenda.produtos) && venda.equals(itemVenda.venda);
+        return codigo.equals(itemVenda.codigo) && quantidade.equals(itemVenda.quantidade) && precoVendido.equals(itemVenda.precoVendido) && produtos.equals(itemVenda.produtos) && venda.equals(itemVenda.venda);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo, quanidade, precoVendido, produtos, venda);
+        return Objects.hash(codigo, quantidade, precoVendido, produtos, venda);
     }
 
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -25,6 +26,9 @@ public class Venda {
 
     @Column(name = "ativo")
     private Boolean ativo;
+
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ItemVenda> itens;
 
     @ManyToOne
     @JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")

@@ -59,7 +59,7 @@ public class ProdutoServico{
     }
 
 
-    private Produtos validarProdutoExiste(Long codigoProduto) {
+    public Produtos validarProdutoExiste(Long codigoProduto) {
         Optional<Produtos> produto = buscarPorCodigo(codigoProduto);
         if (produto.isEmpty()){
             throw new EmptyResultDataAccessException(1);
@@ -73,6 +73,10 @@ public class ProdutoServico{
         if(produtoPorDescricao.isPresent() && produtoPorDescricao.get().getCodigo() != produto.getCodigo()) {
             throw new RegraDeNegocioException(String.format("o produto %s ja está cadastrado", produto.getDescricao()));
         }
+    }
+
+    protected void atualizarQuantidade(Produtos produto) {
+        produtoRepositorio.save(produto);
     }
 
 
