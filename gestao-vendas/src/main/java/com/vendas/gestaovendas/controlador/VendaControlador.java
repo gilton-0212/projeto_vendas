@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,24 +50,20 @@ public class VendaControlador {
 
     @ApiOperation(value = "Registrar Venda", nickname = "salvar")
     @PostMapping
-    public ResponseEntity<ClienteVendaResponseDTO> salvar(@RequestBody VendaRequestDTO vendaDto){
+    public ResponseEntity<ClienteVendaResponseDTO> salvar(@Valid @RequestBody VendaRequestDTO vendaDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(vendaServico.salvar(vendaDto));
     }
 
     @ApiOperation(value = "Atualizar Venda", nickname = "atualizar")
     @PutMapping("/{codigoVenda}")
-    public ResponseEntity<ClienteVendaResponseDTO> atualizar(@PathVariable Long codigoVenda, @RequestBody VendaRequestDTO vendaDto){
+    public ResponseEntity<ClienteVendaResponseDTO> atualizar(@PathVariable Long codigoVenda, @Valid @RequestBody VendaRequestDTO vendaDto){
         return ResponseEntity.ok(vendaServico.atualizar(codigoVenda, vendaDto));
     }
 
-    /*
-    @ApiOperation(value = "Deletar vendas por codigo", nickname = "DeletarVendaspPorCodigo")
+    @ApiOperation(value = "Deletar vendas por codigo", nickname = "DeletarVendasPorCodigo")
     @DeleteMapping("/{codigoVenda}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long codigoVenda) {
         vendaServico.deletar(codigoVenda);
     }
-
-     */
-
 }

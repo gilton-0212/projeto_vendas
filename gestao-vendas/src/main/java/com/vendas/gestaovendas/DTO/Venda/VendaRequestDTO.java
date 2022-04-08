@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,18 +14,24 @@ import java.util.List;
 public class VendaRequestDTO {
 
     @ApiModelProperty(value = "Data")
+    @NotNull(message = "Data")
     private LocalDate data;
 
     @ApiModelProperty(value = "Ativo")
+    @NotNull(message = "Ativo")
     private Boolean ativo;
 
     @ApiModelProperty(value = "Itens")
+    @NotNull(message = "Itens")
+    @Valid
     private List<ItemVendaRequestDTO> ItensVendaDto;
 
     @ApiModelProperty(value = "Codigo Cliente")
+    @NotNull(message = "Codigo Cliente")
     private Long codigoCliente;
 
     @ApiModelProperty(value = "Vendedor")
+    @NotNull(message = "Codigo Vendedor")
     private Long codigoVendedor;
 
     public VendaRequestDTO(LocalDate data, Boolean ativo, List<ItemVendaRequestDTO> itensVendaDto, Long codigoCliente, Long codigoVendedor) {

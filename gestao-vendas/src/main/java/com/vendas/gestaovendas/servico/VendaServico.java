@@ -7,6 +7,8 @@ import com.vendas.gestaovendas.repositorio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,11 +59,16 @@ public class VendaServico extends abstractVendaServico{
         return retornandoClienteVendaResponseDTO(venda, itensVendaList);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public ClienteVendaResponseDTO salvar(VendaRequestDTO vendaDTO){
 
-        var cliente = clienteRepositorio.findById(vendaDTO.getCodigoCliente());
-        var vendedor = vendedorRepositorio.findById(vendaDTO.getCodigoVendedor());
-        var vendaSalva = salvarVenda(vendaDTO, cliente.get(), vendedor.get());
+        //var cliente = clienteRepositorio.findById(vendaDTO.getCodigoCliente());
+        //var vendedor = vendedorRepositorio.findById(vendaDTO.getCodigoVendedor());
+
+        Cliente cliente = validarClienteVendaExiste(vendaDTO.getCodigoCliente());
+        Vendedor vendedor = validarVendedorVendaExiste(vendaDTO.getCodigoVendedor());
+        validarProdutoExisteEAtualizarQuantidade(vendaDTO.getItensVendaDto());
+        var vendaSalva = salvarVenda(vendaDTO, cliente, vendedor);
 
         return retornandoClienteVendaResponseDTO(vendaSalva);
     }
@@ -77,6 +84,15 @@ public class VendaServico extends abstractVendaServico{
         return retornandoClienteVendaResponseDTO(vendaAtualizada);
 
     }
+
+    public void deletar(Long codigoVenda) {
+        validarVendaExiste(codigoVenda);
+        List<ItemVenda> itensVenda = itemVendaRepositorio.findByVendaCodigo(codigoVenda);
+        devolverEstoque(itensVenda);
+        itemVendaRepositorio.deleteAll(itensVenda);
+        vendaRepositorio.deleteById(codigoVenda);
+    }
+
 
     public Venda salvarVenda(VendaRequestDTO vendaDto, Cliente cliente, Vendedor vendedor) {
 
@@ -178,7 +194,8 @@ public class VendaServico extends abstractVendaServico{
         return vendedor.get();
     }
 
-
+////////////////////////////////////////////////
+    //
     //colocar na classe abstrata
     private VendaResponseDTO criandoVendaResponseDTO(Venda venda, List<ItemVenda> itensVendaList) {
         List<ItemVendaResponseDTO> itensVendaResponseDto = itensVendaList.stream()
@@ -197,14 +214,12 @@ public class VendaServico extends abstractVendaServico{
                 criandoVendaResponseDTO(venda, itensVendaList)));
     }
 
-    /////
     protected VendaResponseDTO criandoVendaResponseDTO(Venda venda) {
         List<ItemVendaResponseDTO> itensVendaResponseDTO = venda.getItens()
                 .stream().map(this::criandoItemVendaResponseDTO).collect(Collectors.toList());
 
         return new VendaResponseDTO(venda.getCodigo(), venda.getData(),venda.getAtivo(),
                 itensVendaResponseDTO, venda.getVendedor().getNome(), venda.getCliente().getNome());
-
     }
 
     protected ItemVendaResponseDTO criandoItemVendaResponseDTO(ItemVenda itemVenda) {
@@ -217,6 +232,4 @@ public class VendaServico extends abstractVendaServico{
         return new ClienteVendaResponseDTO(venda.getCliente().getNome(),List.of(
                 criandoVendaResponseDTO(venda)));
     }
-
-
 }
