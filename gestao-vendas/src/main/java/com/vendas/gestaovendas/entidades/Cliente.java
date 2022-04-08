@@ -29,6 +29,10 @@ public class Cliente {
     @Embedded
     private Endereco endereco;
 
+    public Cliente(Long codigo) {
+        this.codigo = codigo;
+    }
+
     public Cliente(){
 
     }
